@@ -10,7 +10,7 @@ if (!code) {
     const profile = await fetchProfile(accessToken);
     const playlist = await fetchPlaylist(accessToken, playlistId);
     // populateUI(profile);
-    displayPlaylist(playlist);
+    // displayPlaylist(playlist);
 }
 
 export async function redirectToAuthCodeFlow(clientId: string) {
@@ -85,9 +85,9 @@ async function fetchPlaylist(token: string, playlist_id: string): Promise<Playli
     return await result.json();
 }
 
-function displayPlaylist(playlist: Playlist) {
-    // TODO populate playlist object
-}
+// function displayPlaylist(playlist: Playlist) {
+//     // TODO populate playlist object
+// }
 // function populateUI(profile: UserProfile) {
 //     document.getElementById("displayName")!.innerText = profile.display_name;
 //     if (profile.images[0]) {
