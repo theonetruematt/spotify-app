@@ -1,16 +1,20 @@
-const clientId = "b39f52315e534b6fa9f022f05e72e0ec";
+import key from "./client_info.ts";
+
+const clientId = key;
+
+// const clientId = key["client-id"];
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
-const playlistId = 'insert-playlist-id-here';
+const playlistId = '4ibYhYSOUnD6urxP54eCm4';
 
 if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
     const accessToken = await getAccessToken(clientId, code);
-    const profile = await fetchProfile(accessToken);
+    //const profile = await fetchProfile(accessToken);
     const playlist = await fetchPlaylist(accessToken, playlistId);
     // populateUI(profile);
-    // displayPlaylist(playlist);
+    displayPlaylist(playlist);
 }
 
 export async function redirectToAuthCodeFlow(clientId: string) {
@@ -69,13 +73,13 @@ export async function getAccessToken(clientId: string, code: string): Promise<st
     return access_token;
 }
 
-async function fetchProfile(token: string): Promise<UserProfile> {
-    const result = await fetch("https://api.spotify.com/v1/me", {
-        method: "GET", headers: { Authorization: `Bearer ${token}` }
-    });
+// async function fetchProfile(token: string): Promise<UserProfile> {
+//     const result = await fetch("https://api.spotify.com/v1/me", {
+//         method: "GET", headers: { Authorization: `Bearer ${token}` }
+//     });
 
-    return await result.json();
-}
+//     return await result.json();
+// }
 
 async function fetchPlaylist(token: string, playlist_id: string): Promise<Playlist> {
     const result = await fetch(`https://api.spotify.com/v1/me/playlists/${playlist_id}`, {
@@ -85,9 +89,10 @@ async function fetchPlaylist(token: string, playlist_id: string): Promise<Playli
     return await result.json();
 }
 
-// function displayPlaylist(playlist: Playlist) {
-//     // TODO populate playlist object
-// }
+function displayPlaylist(playlist: Playlist) {
+    document.getElementById("trackList-list")!.innerText = playlist.tracks.items[0].track.name;
+    // TODO populate playlist object
+}
 // function populateUI(profile: UserProfile) {
 //     document.getElementById("displayName")!.innerText = profile.display_name;
 //     if (profile.images[0]) {
